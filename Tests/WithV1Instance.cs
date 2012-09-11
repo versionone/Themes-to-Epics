@@ -16,5 +16,10 @@ namespace VersionOne.Themes_to_Epics.Tests
 		{
 			return V1.Create.Project(Random.Name(), "Scope:0", DateTime.Now, null);
 		}
+
+		protected Member NewMember()
+		{
+			return V1.Create.Member(Random.Name(), Random.Name());
+		}
 	}
 }

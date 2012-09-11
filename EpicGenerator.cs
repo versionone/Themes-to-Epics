@@ -14,11 +14,16 @@ namespace VersionOne.Themes_to_Epics
 
 		public Epic From(Theme theme)
 		{
-			var attributes = new Dictionary<string, object>()
+			var attributes = new Dictionary<string, object>
 			{
 				{"Description", theme.Description},
 			};
-			return _v1.Create.Epic(theme.Name, theme.Project, attributes);
+			Epic epic = _v1.Create.Epic(theme.Name, theme.Project, attributes);
+			foreach (var owner in theme.Owners)
+			{
+				epic.Owners.Add(owner);
+			}
+			return epic;
 		}
 	}
 }
