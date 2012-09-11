@@ -41,5 +41,10 @@ namespace VersionOne.Themes_to_Epics.Tests
 				return null;
 			return values[_rnd.Next(values.Length)];
 		}
+
+		public static double Estimate()
+		{
+			return _rnd.NextDouble() * 100.0;
+		}
 	}
 }

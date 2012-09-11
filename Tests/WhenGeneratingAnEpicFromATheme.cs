@@ -24,6 +24,8 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Owners.Add(NewMember());
 			_theme.Owners.Add(NewMember());
 			_theme.Risk.PickAValue();
+			_theme.Priority.PickAValue();
+			_theme.Estimate = Random.Estimate();
 		}
 
 		private IListValueProperty PickRisk()
@@ -64,6 +66,18 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveTheSameRisk()
 		{
 			Assert.That(_epic.Risk.CurrentValue, Is.EqualTo(_theme.Risk.CurrentValue));
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSamePriority()
+		{
+			Assert.That(_epic.Priority.CurrentValue, Is.EqualTo(_theme.Priority.CurrentValue));
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameEstimate()
+		{
+			Assert.That(_epic.Estimate, Is.EqualTo(_theme.Estimate));
 		}
 	}
 }

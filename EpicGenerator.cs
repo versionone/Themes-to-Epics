@@ -24,6 +24,8 @@ namespace VersionOne.Themes_to_Epics
 				epic.Owners.Add(owner);
 			}
 			epic.Risk.CurrentValue = theme.Risk.CurrentValue;
+			epic.Priority.CurrentValue = theme.Priority.CurrentValue;
+			epic.Estimate = theme.Estimate;
 			return epic;
 		}
 	}
