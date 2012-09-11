@@ -1,0 +1,6 @@
+*.user
+*.suo
+/bin/
+/obj/
+/SDK-doc/
+/NUnit-2.6.1/
