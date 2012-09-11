@@ -21,10 +21,5 @@ namespace VersionOne.Themes_to_Epics
 			}
 			Console.WriteLine("{0} Themes", themes.Count);
 		}
-
-		public static  Epic GenerateEpicFrom(Theme theme, V1Instance v1)
-		{
-			return v1.Create.Epic(theme.Name, theme.Project);
-		}
 	}
 }

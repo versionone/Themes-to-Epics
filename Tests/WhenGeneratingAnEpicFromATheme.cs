@@ -15,7 +15,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 		{
 			_project = NewProject();
 			_theme = V1.Create.Theme(Random.Name(), _project);
-			_epic = Program.GenerateEpicFrom(_theme, V1);
+			_epic = new EpicGenerator(V1).From(_theme);
 		}
 
 		[TestFixtureTearDown]
