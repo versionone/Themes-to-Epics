@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics
@@ -13,7 +14,11 @@ namespace VersionOne.Themes_to_Epics
 
 		public Epic From(Theme theme)
 		{
-			return _v1.Create.Epic(theme.Name, theme.Project);
+			var attributes = new Dictionary<string, object>()
+			{
+				{"Description", theme.Description},
+			};
+			return _v1.Create.Epic(theme.Name, theme.Project, attributes);
 		}
 	}
 }

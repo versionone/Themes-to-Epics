@@ -17,7 +17,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 			return String(10);
 		}
 
-		private static string String(int suggestedLength)
+		public static string String(int suggestedLength)
 		{
 			double q = 1.0 - (1.0 / suggestedLength);
 			StringBuilder builder = new StringBuilder();

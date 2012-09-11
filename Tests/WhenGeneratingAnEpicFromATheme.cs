@@ -13,8 +13,19 @@ namespace VersionOne.Themes_to_Epics.Tests
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
+			GivenATheme();
+			WhenGeneratingAnEpic();
+		}
+
+		private void GivenATheme()
+		{
 			_project = NewProject();
 			_theme = V1.Create.Theme(Random.Name(), _project);
+			_theme.Description = Random.String(20);
+		}
+
+		private void WhenGeneratingAnEpic()
+		{
 			_epic = new EpicGenerator(V1).From(_theme);
 		}
 
@@ -36,6 +47,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveTheSameProject()
 		{
 			Assert.That(_epic.Project, Is.EqualTo(_theme.Project));
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameDescription()
+		{
+			Assert.That(_epic.Description, Is.EqualTo(_theme.Description));
 		}
 	}
 }
