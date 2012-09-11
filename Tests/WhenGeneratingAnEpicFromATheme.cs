@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using VersionOne.SDK.ObjectModel;
 
@@ -6,9 +7,6 @@ namespace VersionOne.Themes_to_Epics.Tests
 	[TestFixture]
 	public class WhenGeneratingAnEpicFromATheme : WithV1Instance
 	{
-		private Project _project;
-		private Member _owner1;
-		private Member _owner2;
 		private Theme _theme;
 		private Epic _epic;
 
@@ -21,28 +19,15 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void GivenATheme()
 		{
-			_project = NewProject();
-			_owner1 = NewMember();
-			_owner2 = NewMember();
-			_theme = V1.Create.Theme(Random.Name(), _project);
-			_theme.Description = Random.String(20);
-			_theme.Owners.Add(_owner1);
-			_theme.Owners.Add(_owner2);
+			_theme = NewTheme();
+			_theme.Description = Random.Description();
+			_theme.Owners.Add(NewMember());
+			_theme.Owners.Add(NewMember());
 		}
 
 		private void WhenGeneratingAnEpic()
 		{
-			_epic = new EpicGenerator(V1).From(_theme);
-		}
-
-		[TestFixtureTearDown]
-		public void TearDown()
-		{
-			if (_epic != null) _epic.Delete();
-			if (_theme != null) _theme.Delete();
-			if (_owner2 != null) _owner2.Delete();
-			if (_owner1 != null) _owner1.Delete();
-			if (_project != null) _project.Delete();
+			_epic = Queue(new EpicGenerator(V1).From(_theme));
 		}
 
 		[Test]
