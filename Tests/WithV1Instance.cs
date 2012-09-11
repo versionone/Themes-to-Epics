@@ -8,6 +8,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 	{
 		private V1Instance _v1;
 		private IList<BaseAsset> _baseAssets = new List<BaseAsset>();
+		private Project _theProject;
 
 		void IDisposable.Dispose()
 		{
@@ -31,6 +32,11 @@ namespace VersionOne.Themes_to_Epics.Tests
 			get { return _v1 ?? (_v1 = new V1Instance("http://localhost/U", "admin", "admin")); }
 		}
 
+		protected Project TheProject
+		{
+			get { return _theProject ?? (_theProject = NewProject());}
+		}
+
 		protected Project NewProject()
 		{
 			return Queue(V1.Create.Project(Random.Name(), "Scope:0", DateTime.Now, null));
@@ -43,9 +49,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		protected Theme NewTheme()
 		{
-			return Queue(V1.Create.Theme(Random.Name(), NewProject()));
+			return Queue(V1.Create.Theme(Random.Name(), TheProject));
 		}
 
-
+		protected Goal NewGoal()
+		{
+			return Queue(V1.Create.Goal(Random.Name(), TheProject));
+		}
 	}
 }

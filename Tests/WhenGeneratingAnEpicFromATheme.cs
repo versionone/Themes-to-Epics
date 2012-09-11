@@ -26,11 +26,8 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Risk.PickAValue();
 			_theme.Priority.PickAValue();
 			_theme.Estimate = Random.Estimate();
-		}
-
-		private IListValueProperty PickRisk()
-		{
-			return null;
+			_theme.Goals.Add(NewGoal());
+			_theme.Goals.Add(NewGoal());
 		}
 
 		private void WhenGeneratingAnEpic()
@@ -78,6 +75,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveTheSameEstimate()
 		{
 			Assert.That(_epic.Estimate, Is.EqualTo(_theme.Estimate));
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameGoals()
+		{
+			Assert.That(_epic.Goals, Is.EquivalentTo(_theme.Goals));
 		}
 	}
 }

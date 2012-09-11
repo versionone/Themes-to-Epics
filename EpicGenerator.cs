@@ -20,12 +20,12 @@ namespace VersionOne.Themes_to_Epics
 			};
 			Epic epic = _v1.Create.Epic(theme.Name, theme.Project, attributes);
 			foreach (var owner in theme.Owners)
-			{
 				epic.Owners.Add(owner);
-			}
 			epic.Risk.CurrentValue = theme.Risk.CurrentValue;
 			epic.Priority.CurrentValue = theme.Priority.CurrentValue;
 			epic.Estimate = theme.Estimate;
+			foreach (var goal in theme.Goals)
+				epic.Goals.Add(goal);
 			return epic;
 		}
 	}
