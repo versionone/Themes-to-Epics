@@ -23,6 +23,7 @@ namespace VersionOne.Themes_to_Epics
 			{
 				epic.Owners.Add(owner);
 			}
+			epic.Risk.CurrentValue = theme.Risk.CurrentValue;
 			return epic;
 		}
 	}

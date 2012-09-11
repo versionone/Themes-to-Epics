@@ -1,4 +1,5 @@
 using System.Text;
+using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics.Tests
 {
@@ -31,6 +32,14 @@ namespace VersionOne.Themes_to_Epics.Tests
 				builder.Append(Character());
 			} while (_rnd.NextDouble() < q);
 			return builder.ToString();
+		}
+
+		public static string Value(IListValueProperty property)
+		{
+			var values = property.AllValues;
+			if (values.Length == 0)
+				return null;
+			return values[_rnd.Next(values.Length)];
 		}
 	}
 }

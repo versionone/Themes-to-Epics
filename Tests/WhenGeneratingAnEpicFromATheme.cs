@@ -23,6 +23,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Description = Random.Description();
 			_theme.Owners.Add(NewMember());
 			_theme.Owners.Add(NewMember());
+			_theme.Risk.PickAValue();
+		}
+
+		private IListValueProperty PickRisk()
+		{
+			return null;
 		}
 
 		private void WhenGeneratingAnEpic()
@@ -52,6 +58,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveTheSameOwners()
 		{
 			Assert.That(_epic.Owners, Is.EquivalentTo(_theme.Owners));
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameRisk()
+		{
+			Assert.That(_epic.Risk.CurrentValue, Is.EqualTo(_theme.Risk.CurrentValue));
 		}
 	}
 }

@@ -47,6 +47,7 @@
     <Compile Include="EpicGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Tests\Extensions.cs" />
     <Compile Include="Tests\Random.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />
     <Compile Include="Tests\WithV1Instance.cs" />
