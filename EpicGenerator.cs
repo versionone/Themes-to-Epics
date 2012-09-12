@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics
@@ -35,6 +36,11 @@ namespace VersionOne.Themes_to_Epics
 				childEpic.Save();
 			}
 			return epic;
+		}
+
+		public IEnumerable<Theme> ChooseThemes(Project scope)
+		{
+			yield break;
 		}
 	}
 }

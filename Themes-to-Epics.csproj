@@ -49,6 +49,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Tests\Extensions.cs" />
     <Compile Include="Tests\Random.cs" />
+    <Compile Include="Tests\WhenChoosingThemesToConvert.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicTreeFromAThemeTree.cs" />
     <Compile Include="Tests\TesterBase.cs" />
