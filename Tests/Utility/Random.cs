@@ -1,7 +1,7 @@
 using System.Text;
 using VersionOne.SDK.ObjectModel;
 
-namespace VersionOne.Themes_to_Epics.Tests
+namespace VersionOne.Themes_to_Epics.Tests.Utility
 {
 	public static class Random
 	{

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using VersionOne.SDK.ObjectModel;
+using VersionOne.SDK.ObjectModel.Filters;
 
 namespace VersionOne.Themes_to_Epics
 {
@@ -10,6 +12,15 @@ namespace VersionOne.Themes_to_Epics
 		public EpicGenerator(IV1Adapter v1)
 		{
 			_v1 = v1;
+		}
+
+		public Epic FindEpicGeneratedFrom(Theme theme)
+		{
+			var filter = new EpicFilter()
+			{
+				Reference = { "Generated from " + theme.DisplayID }
+			};
+			return theme.Project.GetEpics(filter).FirstOrDefault();
 		}
 
 		public Epic GenerateEpicFrom(Theme theme)
@@ -23,6 +34,8 @@ namespace VersionOne.Themes_to_Epics
 			epic.Estimate = theme.Estimate;
 			foreach (var goal in theme.Goals)
 				epic.Goals.Add(goal);
+			epic.Reference = "Generated from " + theme.DisplayID;
+			epic.Save();
 			return epic;
 		}
 
@@ -40,7 +53,12 @@ namespace VersionOne.Themes_to_Epics
 
 		public IEnumerable<Theme> ChooseThemes(Project scope)
 		{
-			return scope.GetThemes(null);
+			ThemeFilter filter = new ThemeFilter
+			{
+				Parent = {null},
+				State = {State.Active}
+			};
+			return scope.GetThemes(filter, true);
 		}
 	}
 }

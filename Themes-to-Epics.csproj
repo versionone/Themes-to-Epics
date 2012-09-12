@@ -47,12 +47,13 @@
     <Compile Include="EpicGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="Tests\Extensions.cs" />
-    <Compile Include="Tests\Random.cs" />
+    <Compile Include="Tests\Utility\Extensions.cs" />
+    <Compile Include="Tests\Utility\Random.cs" />
     <Compile Include="Tests\WhenChoosingThemesToConvert.cs" />
+    <Compile Include="Tests\WhenFindingWhichEpicWasGeneratedFromATheme.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicTreeFromAThemeTree.cs" />
-    <Compile Include="Tests\TesterBase.cs" />
+    <Compile Include="Tests\Utility\TesterBase.cs" />
     <Compile Include="V1Adapter.cs" />
   </ItemGroup>
   <ItemGroup>

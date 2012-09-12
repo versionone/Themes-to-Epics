@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using VersionOne.SDK.ObjectModel;
+using VersionOne.Themes_to_Epics.Tests.Utility;
 
 namespace VersionOne.Themes_to_Epics.Tests
 {
@@ -9,30 +10,85 @@ namespace VersionOne.Themes_to_Epics.Tests
 	{
 		private Theme _theme1;
 		private Theme _theme2;
+		private Theme _childTheme;
+		private Theme _closedTheme;
+		private Theme _themeInChildProject;
+		private Theme _themeInOtherProject;
 		private IEnumerable<Theme> _themes;
 
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			GivenThemesInAProject();
-			WhenChoosingThemesInTheProject();
+			GivenThemesInTheProject();
+			GivenChildrenThemes();
+			GivenClosedThemes();
+			GivenThemesInChildProjects();
+			GivenThemesInOtherProjects();
+			WhenChoosingThemes();
 		}
 
-		private void GivenThemesInAProject()
+		private void GivenThemesInTheProject()
 		{
 			_theme1 = NewTheme();
 			_theme2 = NewTheme();
 		}
 
-		private void WhenChoosingThemesInTheProject()
+		private void GivenChildrenThemes()
+		{
+			_childTheme = NewTheme();
+			_childTheme.ParentTheme = _theme1;
+			_childTheme.Save();
+		}
+
+		private void GivenClosedThemes()
+		{
+			_closedTheme = NewTheme();
+			_closedTheme.Close();
+		}
+
+		private void GivenThemesInChildProjects()
+		{
+			_themeInChildProject = NewTheme(NewProject(TheProject));
+		}
+
+		private void GivenThemesInOtherProjects()
+		{
+			_themeInOtherProject = NewTheme(NewProject());
+		}
+
+		private void WhenChoosingThemes()
 		{
 			_themes = new EpicGenerator(this).ChooseThemes(TheProject);
 		}
 
 		[Test]
-		public void AllThemesInTheProjectShouldBeChosen()
+		public void ThemesInTheProjectShouldBeChosen()
 		{
 			Assert.That(_themes, Has.Member(_theme1).And.Member(_theme2));
+		}
+
+		[Test]
+		public void ChildrenThemesShouldNotBeChosen()
+		{
+			Assert.That(_themes, Has.No.Member(_childTheme));
+		}
+
+		[Test]
+		public void ClosedThemesShouldNotBeChosen()
+		{
+			Assert.That(_themes, Has.No.Member(_closedTheme));
+		}
+
+		[Test]
+		public void ThemesInChildProjectsShouldBeChosen()
+		{
+			Assert.That(_themes, Has.Member(_themeInChildProject));
+		}
+
+		[Test]
+		public void ThemesInOtherProjectsShouldNotBeChosen()
+		{
+			Assert.That(_themes, Has.No.Member(_themeInOtherProject));
 		}
 	}
 }

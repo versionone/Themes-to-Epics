@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using VersionOne.SDK.ObjectModel;
+using VersionOne.Themes_to_Epics.Tests.Utility;
 
 namespace VersionOne.Themes_to_Epics.Tests
 {
@@ -80,6 +81,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveTheSameGoals()
 		{
 			Assert.That(_epic.Goals, Is.EquivalentTo(_theme.Goals));
+		}
+
+		[Test]
+		public void TheEpicReferenceFieldShouldContainTheThemeID()
+		{
+			Assert.That(_epic.Reference, Contains.Substring(_theme.DisplayID));
 		}
 	}
 }

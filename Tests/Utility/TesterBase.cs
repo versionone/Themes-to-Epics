@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using VersionOne.SDK.ObjectModel;
 
-namespace VersionOne.Themes_to_Epics.Tests
+namespace VersionOne.Themes_to_Epics.Tests.Utility
 {
 	public abstract class TesterBase : IDisposable, IV1Adapter
 	{
@@ -42,6 +42,11 @@ namespace VersionOne.Themes_to_Epics.Tests
 			return Push(V1.Create.Project(Random.Name(), "Scope:0", DateTime.Now, null));
 		}
 
+		protected Project NewProject(Project parent)
+		{
+			return Push(V1.Create.Project(Random.Name(), parent, DateTime.Now, null));
+		}
+
 		protected Member NewMember()
 		{
 			return Push(V1.Create.Member(Random.Name(), Random.Name()));
@@ -49,7 +54,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		protected Theme NewTheme()
 		{
-			return Push(V1.Create.Theme(Random.Name(), TheProject));
+			return NewTheme(TheProject);
+		}
+
+		protected Theme NewTheme(Project project)
+		{
+			return Push(V1.Create.Theme(Random.Name(), project));
 		}
 
 		protected Goal NewGoal()

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using VersionOne.SDK.ObjectModel;
+using VersionOne.Themes_to_Epics.Tests.Utility;
 
 namespace VersionOne.Themes_to_Epics.Tests
 {

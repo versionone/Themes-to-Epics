@@ -1,6 +1,6 @@
 using VersionOne.SDK.ObjectModel;
 
-namespace VersionOne.Themes_to_Epics.Tests
+namespace VersionOne.Themes_to_Epics.Tests.Utility
 {
 	static class Extensions
 	{
