@@ -4,7 +4,7 @@ using VersionOne.SDK.ObjectModel;
 namespace VersionOne.Themes_to_Epics.Tests
 {
 	[TestFixture]
-	public class WhenGeneratingAnEpicFromATheme : WithV1Instance
+	public class WhenGeneratingAnEpicFromATheme : TesterBase
 	{
 		private Theme _theme;
 		private Epic _epic;

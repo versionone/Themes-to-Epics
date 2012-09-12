@@ -4,7 +4,7 @@ using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics.Tests
 {
-	public abstract class WithV1Instance : IDisposable, IV1Adapter
+	public abstract class TesterBase : IDisposable, IV1Adapter
 	{
 		private V1Instance _v1;
 		private IList<BaseAsset> _baseAssets = new List<BaseAsset>();

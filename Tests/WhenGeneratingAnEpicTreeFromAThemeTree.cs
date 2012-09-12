@@ -4,7 +4,7 @@ using VersionOne.SDK.ObjectModel;
 namespace VersionOne.Themes_to_Epics.Tests
 {
 	[TestFixture]
-	public class WhenGeneratingAnEpicTreeFromAThemeTree : WithV1Instance
+	public class WhenGeneratingAnEpicTreeFromAThemeTree : TesterBase
 	{
 		private Theme _theme;
 		private Epic _epic;
@@ -44,4 +44,17 @@ namespace VersionOne.Themes_to_Epics.Tests
 			Assert.That(_epic.GetChildEpics(null).Count, Is.EqualTo(_theme.GetChildThemes(null).Count));
 		}
 	}
+
+/*
+	[TestFixture]
+	public class WhenChoosingThemesToConvert : TesterBase
+	{
+		[TestFixtureSetUp]
+		public void SetUp()
+		{
+			GivenAThemeTree();
+			WhenGeneratingAnEpicTree();
+		}
+	}
+*/
 }
