@@ -31,7 +31,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void WhenGeneratingAnEpic()
 		{
-			_epic = new EpicGenerator(this).From(_theme);
+			_epic = new EpicGenerator(this).GenerateEpicFrom(_theme);
 		}
 
 		[Test]
@@ -80,49 +80,6 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveTheSameGoals()
 		{
 			Assert.That(_epic.Goals, Is.EquivalentTo(_theme.Goals));
-		}
-	}
-
-	[TestFixture]
-	public class WhenGeneratingAnEpicTreeFromAThemeTree : WithV1Instance
-	{
-		private Theme _theme;
-		private Epic _epic;
-
-		[TestFixtureSetUp]
-		public void SetUp()
-		{
-			GivenAThemeTree();
-			WhenGeneratingAnEpicTree();
-		}
-
-		private void GivenAThemeTree()
-		{
-			_theme = NewTheme();
-
-			var child1 = NewTheme();
-			child1.ParentTheme = _theme;
-			child1.Save();
-
-			var child2 = NewTheme();
-			child2.ParentTheme = _theme;
-			child2.Save();
-
-			var grandchild = NewTheme();
-			grandchild.ParentTheme = child2;
-			grandchild.Save();
-		}
-
-		private void WhenGeneratingAnEpicTree()
-		{
-			_epic = new EpicGenerator(this).From(_theme);
-		}
-
-
-		[Test]
-		public void TheEpicShouldHaveEpicChildren()
-		{
-			Assert.That(_epic.GetChildEpics(null).Count, Is.EqualTo(_theme.GetChildThemes(null).Count));
 		}
 	}
 }

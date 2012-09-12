@@ -50,6 +50,7 @@
     <Compile Include="Tests\Extensions.cs" />
     <Compile Include="Tests\Random.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />
+    <Compile Include="Tests\WhenGeneratingAnEpicTreeFromAThemeTree.cs" />
     <Compile Include="Tests\WithV1Instance.cs" />
     <Compile Include="V1Adapter.cs" />
   </ItemGroup>
