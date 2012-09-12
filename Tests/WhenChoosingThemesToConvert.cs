@@ -7,30 +7,32 @@ namespace VersionOne.Themes_to_Epics.Tests
 	[TestFixture]
 	public class WhenChoosingThemesToConvert : TesterBase
 	{
-		private Theme _theme;
+		private Theme _theme1;
+		private Theme _theme2;
 		private IEnumerable<Theme> _themes;
 
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			GivenATheme();
-			WhenChoosingThemes();
+			GivenThemesInAProject();
+			WhenChoosingThemesInTheProject();
 		}
 
-		private void GivenATheme()
+		private void GivenThemesInAProject()
 		{
-			_theme = NewTheme();
+			_theme1 = NewTheme();
+			_theme2 = NewTheme();
 		}
 
-		private void WhenChoosingThemes()
+		private void WhenChoosingThemesInTheProject()
 		{
 			_themes = new EpicGenerator(this).ChooseThemes(TheProject);
 		}
 
 		[Test]
-		public void TheThemeShouldBeIncluded()
+		public void AllThemesInTheProjectShouldBeChosen()
 		{
-			Assert.That(_themes, Has.Member(_theme));
+			Assert.That(_themes, Has.Member(_theme1).And.Member(_theme2));
 		}
 	}
 }

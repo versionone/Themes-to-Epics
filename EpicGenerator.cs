@@ -40,7 +40,7 @@ namespace VersionOne.Themes_to_Epics
 
 		public IEnumerable<Theme> ChooseThemes(Project scope)
 		{
-			yield break;
+			return scope.GetThemes(null);
 		}
 	}
 }
