@@ -1,24 +1,20 @@
-using System.Collections.Generic;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics
 {
 	class EpicGenerator
 	{
-		private readonly V1Instance _v1;
+		private readonly IV1Adapter _v1;
 
-		public EpicGenerator(V1Instance v1)
+		public EpicGenerator(IV1Adapter v1)
 		{
 			_v1 = v1;
 		}
 
 		public Epic From(Theme theme)
 		{
-			var attributes = new Dictionary<string, object>
-			{
-				{"Description", theme.Description},
-			};
-			Epic epic = _v1.Create.Epic(theme.Name, theme.Project, attributes);
+			Epic epic = _v1.CreateEpic(theme.Name, theme.Project);
+			epic.Description = theme.Description;
 			foreach (var owner in theme.Owners)
 				epic.Owners.Add(owner);
 			epic.Risk.CurrentValue = theme.Risk.CurrentValue;

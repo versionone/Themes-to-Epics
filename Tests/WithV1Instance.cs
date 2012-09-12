@@ -4,7 +4,7 @@ using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics.Tests
 {
-	public abstract class WithV1Instance : IDisposable
+	public abstract class WithV1Instance : IDisposable, IV1Adapter
 	{
 		private V1Instance _v1;
 		private IList<BaseAsset> _baseAssets = new List<BaseAsset>();
@@ -21,13 +21,13 @@ namespace VersionOne.Themes_to_Epics.Tests
 			}
 		}
 
-		protected T Queue<T>(T baseAsset) where T : BaseAsset
+		private T Push<T>(T baseAsset) where T : BaseAsset
 		{
 			_baseAssets.Add(baseAsset);
 			return baseAsset;
 		}
 
-		protected V1Instance V1
+		private V1Instance V1
 		{
 			get { return _v1 ?? (_v1 = new V1Instance("http://localhost/U", "admin", "admin")); }
 		}
@@ -39,22 +39,27 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		protected Project NewProject()
 		{
-			return Queue(V1.Create.Project(Random.Name(), "Scope:0", DateTime.Now, null));
+			return Push(V1.Create.Project(Random.Name(), "Scope:0", DateTime.Now, null));
 		}
 
 		protected Member NewMember()
 		{
-			return Queue(V1.Create.Member(Random.Name(), Random.Name()));
+			return Push(V1.Create.Member(Random.Name(), Random.Name()));
 		}
 
 		protected Theme NewTheme()
 		{
-			return Queue(V1.Create.Theme(Random.Name(), TheProject));
+			return Push(V1.Create.Theme(Random.Name(), TheProject));
 		}
 
 		protected Goal NewGoal()
 		{
-			return Queue(V1.Create.Goal(Random.Name(), TheProject));
+			return Push(V1.Create.Goal(Random.Name(), TheProject));
+		}
+
+		Epic IV1Adapter.CreateEpic(string name, Project project)
+		{
+			return Push(V1.Create.Epic(name, project));
 		}
 	}
 }
