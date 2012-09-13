@@ -48,7 +48,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void GivenThemesInChildProjects()
 		{
-			_themeInChildProject = NewTheme(NewProject(TheProject));
+			_themeInChildProject = NewTheme(NewProjectUnder(TheProject));
 		}
 
 		private void GivenThemesInOtherProjects()

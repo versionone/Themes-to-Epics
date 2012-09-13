@@ -69,7 +69,11 @@ namespace VersionOne.Themes_to_Epics
 
 		public IEnumerable<Epic> ChooseEpics()
 		{
-			return _scope.GetEpics(null);
+			EpicFilter filter = new EpicFilter
+			{
+				Parent = {null}
+			};
+			return _scope.GetEpics(filter, true).Where(epic => epic.Theme != null);
 		}
 	}
 }
