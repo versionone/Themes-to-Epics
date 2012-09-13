@@ -79,7 +79,8 @@
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />
     <Compile Include="Tests\Utility\TesterBase.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromAThemeAgain.cs" />
-    <Compile Include="Tests\WhenLoadingOptionsFromAppSettings.cs" />
+    <Compile Include="Tests\WhenLoadingInvalidOptionsFromAppSettings.cs" />
+    <Compile Include="Tests\WhenLoadingValidOptionsFromAppSettings.cs" />
     <Compile Include="Tests\WhenResolvingAProjectMoniker.cs" />
     <Compile Include="V1Adapter.cs" />
   </ItemGroup>

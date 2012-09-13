@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace VersionOne.Themes_to_Epics.Tests
 {
 	[TestFixture]
-	public class WhenLoadingOptionsFromAppSettings
+	public class WhenLoadingValidOptionsFromAppSettings
 	{
 		private NameValueCollection _settings;
 		private static Options _options;
@@ -12,18 +12,17 @@ namespace VersionOne.Themes_to_Epics.Tests
 		[TestFixtureSetUp]
 		public void SetUp()
 		{
-			GivenSomeSettings();
+			GivenValidSettings();
 			WhenLoadingOptions();
 		}
 
-		private void GivenSomeSettings()
+		private void GivenValidSettings()
 		{
 			_settings = new NameValueCollection
 			{
 				{"Url", "abc"},
 				{"Username", "def"},
 				{"Password", "ghi"},
-				{"Bogus", "xyz"},
 			};
 		}
 
