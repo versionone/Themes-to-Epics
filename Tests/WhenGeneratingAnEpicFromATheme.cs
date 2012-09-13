@@ -28,6 +28,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Estimate = Random.Estimate();
 			_theme.Goals.Add(NewGoal());
 			_theme.Goals.Add(NewGoal());
+			_theme.Save();
 		}
 
 		private void WhenGeneratingAnEpic()

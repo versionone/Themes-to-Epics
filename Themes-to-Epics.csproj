@@ -74,6 +74,7 @@
     <Compile Include="Tests\WhenFindingWhichEpicWasGeneratedFromATheme.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />
     <Compile Include="Tests\Utility\TesterBase.cs" />
+    <Compile Include="Tests\WhenGeneratingAnEpicFromAThemeAgain.cs" />
     <Compile Include="V1Adapter.cs" />
   </ItemGroup>
   <ItemGroup>

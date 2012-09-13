@@ -32,13 +32,15 @@ namespace VersionOne.Themes_to_Epics
 
 		public Epic GenerateEpicFrom(Theme theme)
 		{
-			Epic epic = _v1.CreateEpic(theme.Name, theme.Project);
+			Epic epic = FindEpicGeneratedFrom(theme) ?? _v1.CreateEpic(theme.Name, theme.Project);
 			epic.Description = theme.Description;
+			epic.Owners.Clear();
 			foreach (var owner in theme.Owners)
 				epic.Owners.Add(owner);
 			epic.Risk.CurrentValue = theme.Risk.CurrentValue;
 			epic.Priority.CurrentValue = theme.Priority.CurrentValue;
 			epic.Estimate = theme.Estimate;
+			epic.Goals.Clear();
 			foreach (var goal in theme.Goals)
 				epic.Goals.Add(goal);
 			epic.Reference = ReferenceToTheme(theme);
