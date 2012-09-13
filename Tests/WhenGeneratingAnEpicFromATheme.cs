@@ -32,7 +32,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void WhenGeneratingAnEpic()
 		{
-			_epic = new EpicGenerator(this).GenerateEpicFrom(_theme);
+			_epic = ClassUnderTest.GenerateEpicFrom(_theme);
 		}
 
 		[Test]

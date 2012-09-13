@@ -8,10 +8,12 @@ namespace VersionOne.Themes_to_Epics
 	class EpicGenerator
 	{
 		private readonly IV1Adapter _v1;
+		private readonly Project _scope;
 
-		public EpicGenerator(IV1Adapter v1)
+		public EpicGenerator(Project scope, IV1Adapter v1)
 		{
 			_v1 = v1;
+			_scope = scope;
 		}
 
 		private static string ReferenceToTheme(Theme theme)
@@ -56,18 +58,18 @@ namespace VersionOne.Themes_to_Epics
 			return epic;
 		}
 
-		public IEnumerable<Theme> ChooseThemes(Project scope)
+		public IEnumerable<Theme> ChooseThemes()
 		{
 			ThemeFilter filter = new ThemeFilter
 			{
 				State = {State.Active}
 			};
-			return scope.GetThemes(filter, true);
+			return _scope.GetThemes(filter, true);
 		}
 
-		public IEnumerable<Epic> ChooseEpics(Project scope)
+		public IEnumerable<Epic> ChooseEpics()
 		{
-			return scope.GetEpics(null);
+			return _scope.GetEpics(null);
 		}
 	}
 }

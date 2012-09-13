@@ -58,7 +58,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void WhenChoosingThemes()
 		{
-			_themes = new EpicGenerator(this).ChooseThemes(TheProject);
+			_themes = ClassUnderTest.ChooseThemes();
 		}
 
 		[Test]

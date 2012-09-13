@@ -36,7 +36,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void WhenGeneratingAnEpicTree()
 		{
-			_epic = new EpicGenerator(this).GenerateEpicTreeFrom(_theme);
+			_epic = ClassUnderTest.GenerateEpicTreeFrom(_theme);
 		}
 
 		[Test]

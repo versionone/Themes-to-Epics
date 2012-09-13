@@ -17,12 +17,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void GivenAnEpicHasBeenGenerated()
 		{
-			_epic = new EpicGenerator(this).GenerateEpicFrom(_theme);
+			_epic = ClassUnderTest.GenerateEpicFrom(_theme);
 		}
 
 		private void WhenFindingTheGeneratedEpic()
 		{
-			_epic = new EpicGenerator(this).FindEpicGeneratedFrom(_theme);
+			_epic = ClassUnderTest.FindEpicGeneratedFrom(_theme);
 		}
 
 		[Test]

@@ -27,7 +27,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void WhenChoosingEpics()
 		{
-			_epics = new EpicGenerator(this).ChooseEpics(TheProject);
+			_epics = ClassUnderTest.ChooseEpics();
 		}
 
 		[Test]

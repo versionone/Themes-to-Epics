@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Dev\Themes-to-Epics\bin\Debug\Themes-to-Epics.exe" total="19" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2012-09-13" time="12:30:03">
+  <environment nunit-version="2.6.1.12217" clr-version="2.0.50727.5456" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="C:\Dev\Themes-to-Epics" machine-name="RD" user="rajiv" user-domain="CORP" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="C:\Dev\Themes-to-Epics\bin\Debug\Themes-to-Epics.exe" executed="True" result="Success" success="True" time="13.322" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="VersionOne" executed="True" result="Success" success="True" time="13.307" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Themes_to_Epics" executed="True" result="Success" success="True" time="13.307" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="13.307" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="WhenChoosingEpicsToProcess" executed="True" result="Success" success="True" time="2.512" asserts="0">
+                    <results>
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenChoosingEpicsToProcess.EpicsInTheProjectShouldBeChosen" executed="True" result="Success" success="True" time="0.047" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="WhenChoosingThemesToConvert" executed="True" result="Success" success="True" time="1.810" asserts="0">
+                    <results>
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenChoosingThemesToConvert.ChildrenThemesShouldBeChosen" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenChoosingThemesToConvert.ClosedThemesShouldNotBeChosen" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenChoosingThemesToConvert.ThemesInChildProjectsShouldBeChosen" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenChoosingThemesToConvert.ThemesInOtherProjectsShouldNotBeChosen" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenChoosingThemesToConvert.ThemesInTheProjectShouldBeChosen" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="WhenFindingWhichEpicWasGeneratedFromATheme" executed="True" result="Success" success="True" time="1.763" asserts="0">
+                    <results>
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenFindingWhichEpicWasGeneratedFromATheme.AnEpicShouldBeFoundForAConvertedTheme" executed="True" result="Success" success="True" time="0.874" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenFindingWhichEpicWasGeneratedFromATheme.NoEpicShouldBeFoundForANewTheme" executed="True" result="Success" success="True" time="0.140" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="WhenGeneratingAnEpicFromATheme" executed="True" result="Success" success="True" time="2.309" asserts="0">
+                    <results>
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicReferenceFieldShouldContainTheThemeID" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveNoTheme" executed="True" result="Success" success="True" time="0.031" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameDescription" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameEstimate" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameGoals" executed="True" result="Success" success="True" time="0.016" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameName" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameOwners" executed="True" result="Success" success="True" time="0.016" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSamePriority" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameProject" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicFromATheme.TheEpicShouldHaveTheSameRisk" executed="True" result="Success" success="True" time="0.000" asserts="1" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="WhenGeneratingAnEpicTreeFromAThemeTree" executed="True" result="Success" success="True" time="4.898" asserts="0">
+                    <results>
+                      <test-case name="VersionOne.Themes_to_Epics.Tests.WhenGeneratingAnEpicTreeFromAThemeTree.TheEpicShouldHaveEpicChildren" executed="True" result="Success" success="True" time="0.047" asserts="1" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

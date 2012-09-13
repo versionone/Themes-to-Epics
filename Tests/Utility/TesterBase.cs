@@ -77,6 +77,11 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			return Push(V1.Create.Epic(Random.Name(), project));
 		}
 
+		internal EpicGenerator ClassUnderTest
+		{
+			get { return new EpicGenerator(TheProject, this); }
+		}
+
 		Epic IV1Adapter.CreateEpic(string name, Project project)
 		{
 			return Push(V1.Create.Epic(name, project));
