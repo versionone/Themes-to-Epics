@@ -17,6 +17,8 @@ namespace VersionOne.Themes_to_Epics
 
 		public Options Load(string[] args)
 		{
+			Scope = args[0];
+			Url = args[1];
 			return this;
 		}
 
@@ -25,6 +27,7 @@ namespace VersionOne.Themes_to_Epics
 			return this;
 		}
 
+		public string Scope { get; set; }
 		public string Url { get; set; }
 		public string Username { get; set; }
 		public string Password { get; set; }
