@@ -64,5 +64,10 @@ namespace VersionOne.Themes_to_Epics
 			};
 			return scope.GetThemes(filter, true);
 		}
+
+		public IEnumerable<Epic> ChooseEpics(Project scope)
+		{
+			return scope.GetEpics(null);
+		}
 	}
 }

@@ -67,6 +67,16 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			return Push(V1.Create.Goal(Random.Name(), TheProject));
 		}
 
+		protected Epic NewEpic()
+		{
+			return NewEpic(TheProject);
+		}
+
+		protected Epic NewEpic(Project project)
+		{
+			return Push(V1.Create.Epic(Random.Name(), project));
+		}
+
 		Epic IV1Adapter.CreateEpic(string name, Project project)
 		{
 			return Push(V1.Create.Epic(name, project));

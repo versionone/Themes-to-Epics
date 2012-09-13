@@ -49,6 +49,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Tests\Utility\Extensions.cs" />
     <Compile Include="Tests\Utility\Random.cs" />
+    <Compile Include="Tests\WhenChoosingEpicsToProcess.cs" />
     <Compile Include="Tests\WhenChoosingThemesToConvert.cs" />
     <Compile Include="Tests\WhenFindingWhichEpicWasGeneratedFromATheme.cs" />
     <Compile Include="Tests\WhenGeneratingAnEpicFromATheme.cs" />

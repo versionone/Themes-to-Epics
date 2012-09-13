@@ -88,5 +88,11 @@ namespace VersionOne.Themes_to_Epics.Tests
 		{
 			Assert.That(_epic.Reference, Contains.Substring(_theme.DisplayID));
 		}
+
+		[Test]
+		public void TheEpicShouldHaveNoTheme()
+		{
+			Assert.That(_epic.Theme, Is.Null);
+		}
 	}
 }
