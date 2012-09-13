@@ -46,18 +46,6 @@ namespace VersionOne.Themes_to_Epics
 			return epic;
 		}
 
-		public Epic GenerateEpicTreeFrom(Theme theme)
-		{
-			Epic epic = GenerateEpicFrom(theme);
-			foreach (var childTheme in theme.GetChildThemes(null))
-			{
-				var childEpic = GenerateEpicTreeFrom(childTheme);
-				childEpic.Parent = epic;
-				childEpic.Save();
-			}
-			return epic;
-		}
-
 		public IEnumerable<Theme> ChooseThemes()
 		{
 			ThemeFilter filter = new ThemeFilter
