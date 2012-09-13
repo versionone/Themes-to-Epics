@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics.Tests.Utility
@@ -27,7 +28,13 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 
 		protected V1Instance V1
 		{
-			get { return _v1 ?? (_v1 = new V1Instance("http://localhost/U", "admin", "admin")); }
+			get { return _v1 ?? (_v1 = CreateV1Instance()); }
+		}
+
+		private static V1Instance CreateV1Instance()
+		{
+			var options = new Options().Load(ConfigurationManager.AppSettings);
+			return new V1Instance(options.Url, options.Username, options.Password);
 		}
 
 		protected Project TheProject
