@@ -25,7 +25,7 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			return baseAsset;
 		}
 
-		private V1Instance V1
+		protected V1Instance V1
 		{
 			get { return _v1 ?? (_v1 = new V1Instance("http://localhost/U", "admin", "admin")); }
 		}

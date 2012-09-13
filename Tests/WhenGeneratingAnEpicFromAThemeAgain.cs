@@ -5,6 +5,22 @@ using VersionOne.Themes_to_Epics.Tests.Utility;
 namespace VersionOne.Themes_to_Epics.Tests
 {
 	[TestFixture]
+	public class WhenResolvingAProjectMoniker : TesterBase
+	{
+		private Project _project;
+		private Project _resolved;
+
+		[Test]
+		public void AValidOidResolvesToTheProject()
+		{
+			_project = NewProject();
+			string moniker = _project.ID;
+			_resolved = new ProjectResolver(V1).Resolve(moniker);
+			Assert.That(_resolved, Is.EqualTo(_project));
+		}
+	}
+
+	[TestFixture]
 	public class WhenGeneratingAnEpicFromAThemeAgain : TesterBase
 	{
 		private Theme _theme;
