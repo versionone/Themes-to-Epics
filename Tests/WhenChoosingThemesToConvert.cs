@@ -68,9 +68,9 @@ namespace VersionOne.Themes_to_Epics.Tests
 		}
 
 		[Test]
-		public void ChildrenThemesShouldNotBeChosen()
+		public void ChildrenThemesShouldBeChosen()
 		{
-			Assert.That(_themes, Has.No.Member(_childTheme));
+			Assert.That(_themes, Has.Member(_childTheme));
 		}
 
 		[Test]

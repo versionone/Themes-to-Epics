@@ -14,11 +14,16 @@ namespace VersionOne.Themes_to_Epics
 			_v1 = v1;
 		}
 
+		private static string ReferenceToTheme(Theme theme)
+		{
+			return "generated-from:" + theme.DisplayID + "/" + theme.ID;
+		}
+
 		public Epic FindEpicGeneratedFrom(Theme theme)
 		{
 			var filter = new EpicFilter()
 			{
-				Reference = { "Generated from " + theme.DisplayID }
+				Reference = { ReferenceToTheme(theme) }
 			};
 			return theme.Project.GetEpics(filter).FirstOrDefault();
 		}
@@ -34,7 +39,7 @@ namespace VersionOne.Themes_to_Epics
 			epic.Estimate = theme.Estimate;
 			foreach (var goal in theme.Goals)
 				epic.Goals.Add(goal);
-			epic.Reference = "Generated from " + theme.DisplayID;
+			epic.Reference = ReferenceToTheme(theme);
 			epic.Save();
 			return epic;
 		}
@@ -55,7 +60,6 @@ namespace VersionOne.Themes_to_Epics
 		{
 			ThemeFilter filter = new ThemeFilter
 			{
-				Parent = {null},
 				State = {State.Active}
 			};
 			return scope.GetThemes(filter, true);
