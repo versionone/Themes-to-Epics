@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics
@@ -9,6 +10,10 @@ namespace VersionOne.Themes_to_Epics
 		{
 			try
 			{
+				Options options = new Options()
+					.Load(ConfigurationManager.AppSettings)
+					.Load(args)
+					.Validate();
 				Run(args);
 			}
 			catch (Exception e)
