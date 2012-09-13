@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using VersionOne.SDK.ObjectModel;
 using VersionOne.Themes_to_Epics.Tests.Utility;
@@ -11,7 +12,6 @@ namespace VersionOne.Themes_to_Epics.Tests
 		private Theme _theme1;
 		private Theme _theme2;
 		private Theme _childTheme;
-		private Theme _closedTheme;
 		private Theme _themeInChildProject;
 		private Theme _themeInOtherProject;
 		private IEnumerable<Theme> _themes;
@@ -35,25 +35,22 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void GivenChildrenThemes()
 		{
-			_childTheme = NewTheme();
-			_childTheme.ParentTheme = _theme1;
-			_childTheme.Save();
+			_childTheme = NewTheme().ChildOf(_theme1);
 		}
 
 		private void GivenClosedThemes()
 		{
-			_closedTheme = NewTheme();
-			_closedTheme.Close();
+			NewTheme().Close();
 		}
 
 		private void GivenThemesInChildProjects()
 		{
-			_themeInChildProject = NewTheme(NewProjectUnder(TheProject));
+			_themeInChildProject = NewThemeIn(NewProjectUnder(TheProject));
 		}
 
 		private void GivenThemesInOtherProjects()
 		{
-			_themeInOtherProject = NewTheme(NewProject());
+			_themeInOtherProject = NewThemeIn(NewProject());
 		}
 
 		private void WhenChoosingThemes()
@@ -74,9 +71,9 @@ namespace VersionOne.Themes_to_Epics.Tests
 		}
 
 		[Test]
-		public void ClosedThemesShouldNotBeChosen()
+		public void OnlyOpenThemesShouldBeChosen()
 		{
-			Assert.That(_themes, Has.No.Member(_closedTheme));
+			Assert.That(_themes.Select(theme => theme.IsActive), Has.All.True);
 		}
 
 		[Test]

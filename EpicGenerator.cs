@@ -23,7 +23,7 @@ namespace VersionOne.Themes_to_Epics
 
 		public Epic FindEpicGeneratedFrom(Theme theme)
 		{
-			var filter = new EpicFilter()
+			var filter = new EpicFilter
 			{
 				Reference = { ReferenceToTheme(theme) }
 			};

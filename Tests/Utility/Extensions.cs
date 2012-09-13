@@ -10,6 +10,13 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			property.CurrentValue = Random.Value(property);
 		}
 
+		internal static Theme ChildOf(this Theme theme, Theme parent)
+		{
+			theme.ParentTheme = parent;
+			theme.Save();
+			return theme;
+		}
+
 		internal static Epic ChildOf(this Epic epic, Epic parent)
 		{
 			epic.Parent = parent;

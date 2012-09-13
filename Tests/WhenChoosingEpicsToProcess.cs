@@ -29,8 +29,8 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private Epic NewThemedEpicIn(Project project)
 		{
-			return NewEpic(project)
-				.WithTheme(NewTheme(project));
+			return NewEpicIn(project)
+				.WithTheme(NewThemeIn(project));
 		}
 
 		private void GivenThemedEpicsInTheProject()
@@ -51,7 +51,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 
 		private void GivenEpicsInChildProjects()
 		{
-			_epicInChildProject = NewEpic(NewProjectUnder(TheProject)).WithTheme(NewTheme());
+			_epicInChildProject = NewEpicIn(NewProjectUnder(TheProject)).WithTheme(NewTheme());
 		}
 
 		private void GivenEpicsInOtherProjects()

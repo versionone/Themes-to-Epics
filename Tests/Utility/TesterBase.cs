@@ -52,10 +52,10 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 
 		protected Theme NewTheme()
 		{
-			return NewTheme(TheProject);
+			return NewThemeIn(TheProject);
 		}
 
-		protected Theme NewTheme(Project project)
+		protected Theme NewThemeIn(Project project)
 		{
 			return Push(V1.Create.Theme(Random.Name(), project));
 		}
@@ -67,13 +67,14 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 
 		protected Epic NewEpic()
 		{
-			return NewEpic(TheProject);
+			return NewEpicIn(TheProject);
 		}
 
-		protected Epic NewEpic(Project project)
+		protected Epic NewEpicIn(Project project)
 		{
 			return Push(V1.Create.Epic(Random.Name(), project));
 		}
+
 
 		internal EpicGenerator ClassUnderTest
 		{
