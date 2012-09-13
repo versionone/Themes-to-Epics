@@ -17,8 +17,14 @@ namespace VersionOne.Themes_to_Epics
 
 		public Options Load(string[] args)
 		{
-			Scope = args[0];
-			Url = args[1];
+			if (args.Length > 0)
+				Scope = args[0];
+			if (args.Length > 1)
+				Url = args[1];
+			if (args.Length > 2)
+				Username = args[2];
+			if (args.Length > 3)
+				Password = args[3];
 			return this;
 		}
 

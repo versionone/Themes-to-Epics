@@ -6,13 +6,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 	[TestFixture]
 	public class WhenLoadingOptionsFromCommandLine
 	{
-		private static Options _options;
+		private Options _options;
 
-		[TestFixtureSetUp]
+		[SetUp]
 		public void SetUp()
 		{
 			GivenOptionsPreloadedFromSettings();
-			WhenLoadingOptions();
 		}
 
 		private void GivenOptionsPreloadedFromSettings()
@@ -26,33 +25,57 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_options = new Options().Load(settings);
 		}
 
-		private void WhenLoadingOptions()
+		private void Load(params string[] args)
 		{
-			string[] args = new[] {"Scope:0", "xyz"};
-			_options = _options.Load(args);
+			_options.Load(args);
 		}
 
 		[Test]
 		public void FirstArgumentIsScope()
 		{
+			Load("Scope:0");
 			Assert.That(_options.Scope, Is.EqualTo("Scope:0"));
 		}
 
 		[Test]
-		public void SecondArgumentOverridesUrl()
+		public void SecondArgumentIsUrl()
 		{
+			Load("Scope:0", "xyz");
 			Assert.That(_options.Url, Is.EqualTo("xyz"));
 		}
 
 		[Test]
-		public void UsernameIsNotChanged()
+		public void ThirdArgumentIsUsername()
 		{
+			Load("Scope:0", "xyz", "uvw");
+			Assert.That(_options.Username, Is.EqualTo("uvw"));
+		}
+
+		[Test]
+		public void FourthArgumentIsPassword()
+		{
+			Load("Scope:0", "xyz", "uvw", "rst");
+			Assert.That(_options.Password, Is.EqualTo("rst"));
+		}
+
+		[Test]
+		public void MissingUrlDefaultsToAppSettings()
+		{
+			Load("Scope:0");
+			Assert.That(_options.Url, Is.EqualTo("abc"));
+		}
+
+		[Test]
+		public void MissingUsernameDefaultsToAppSettings()
+		{
+			Load("Scope:0", "xyz");
 			Assert.That(_options.Username, Is.EqualTo("def"));
 		}
 
 		[Test]
-		public void PasswordIsNotChanged()
+		public void MissingPasswordDefaultsToAppSettings()
 		{
+			Load("Scope:0", "xyz");
 			Assert.That(_options.Password, Is.EqualTo("ghi"));
 		}
 	}
