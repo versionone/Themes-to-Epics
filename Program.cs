@@ -5,7 +5,21 @@ namespace VersionOne.Themes_to_Epics
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static int Main(string[] args)
+		{
+			try
+			{
+				Run(args);
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine("Error: " + e.Message);
+				return 2;
+			}
+			return 0;
+		}
+
+		private static void Run(string[] args)
 		{
 			V1Instance v1Instance = new V1Instance("http://localhost/U", "admin", "admin");
 			V1Adapter v1Adapter = new V1Adapter(v1Instance);
