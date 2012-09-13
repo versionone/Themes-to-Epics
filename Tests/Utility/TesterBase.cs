@@ -15,9 +15,7 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			int i = _baseAssets.Count;
 			while (--i >= 0)
 			{
-				BaseAsset baseAsset = _baseAssets[i];
-				if (baseAsset != null)
-					baseAsset.Delete();
+				_baseAssets[i].TryDelete();
 			}
 		}
 

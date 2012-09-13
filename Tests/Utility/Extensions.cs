@@ -1,3 +1,4 @@
+using System;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics.Tests.Utility
@@ -21,6 +22,18 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			epic.Theme = theme;
 			epic.Save();
 			return epic;
+		}
+
+		internal static void TryDelete(this BaseAsset baseAsset)
+		{
+			if (baseAsset == null) return;
+			if (baseAsset.IsClosed)
+			{
+				try {baseAsset.Reactivate();} 
+				catch (InvalidOperationException) {}
+			}
+			try { baseAsset.Delete(); }
+			catch (InvalidOperationException) { }
 		}
 	}
 }

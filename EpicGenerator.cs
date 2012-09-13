@@ -71,7 +71,8 @@ namespace VersionOne.Themes_to_Epics
 		{
 			EpicFilter filter = new EpicFilter
 			{
-				Parent = {null}
+				Parent = {null},
+				State = {State.Active},
 			};
 			return _scope.GetEpics(filter, true).Where(epic => epic.Theme != null);
 		}

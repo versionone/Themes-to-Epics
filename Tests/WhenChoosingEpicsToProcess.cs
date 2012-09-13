@@ -23,6 +23,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 			GivenChildEpics();
 			GivenEpicsInChildProjects();
 			GivenEpicsInOtherProjects();
+			GivenClosedEpics();
 			WhenChoosingEpics();
 		}
 
@@ -58,6 +59,11 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_epicInOtherProject = NewThemedEpicIn(NewProject());
 		}
 
+		private void GivenClosedEpics()
+		{
+			NewThemedEpicIn(TheProject).Close();
+		}
+
 		private void WhenChoosingEpics()
 		{
 			_epics = ClassUnderTest.ChooseEpics();
@@ -91,6 +97,12 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void OnlyRootEpicsShouldBeChosen()
 		{
 			Assert.That(_epics.Select(epic => epic.Parent), Has.All.Null);
+		}
+
+		[Test]
+		public void OnlyActiveEpicsShouldBeChosen()
+		{
+			Assert.That(_epics.Select(epic => epic.IsActive), Has.All.True);
 		}
 	}
 }
