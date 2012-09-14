@@ -28,6 +28,7 @@ namespace VersionOne.Themes_to_Epics
 				Console.WriteLine("Error: " + e.Message);
 				return 2;
 			}
+			Console.WriteLine("Done.");
 			return 0;
 		}
 
