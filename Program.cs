@@ -49,10 +49,9 @@ namespace VersionOne.Themes_to_Epics
 			IDictionary<Theme, Epic> map = new Dictionary<Theme, Epic>();
 			foreach (var theme in generator.ChooseThemes())
 			{
-				Console.WriteLine("\t{0} \"{1}\" ({2})", theme.DisplayID, theme.Name, theme.ID);
 				var epic = generator.GenerateEpicFrom(theme);
-				Console.WriteLine("\t \t{0} ({1})", epic.DisplayID, epic.ID);
 				map.Add(theme, epic);
+				Console.WriteLine("\t{0} -> {1}", Reference(theme), Reference(epic));
 			}
 
 			Console.WriteLine("{0} themes processed.", map.Count);
@@ -70,20 +69,38 @@ namespace VersionOne.Themes_to_Epics
 					Epic parentEpic;
 					if (map.TryGetValue(parentTheme, out parentEpic))
 					{
-						++count;
-						Console.WriteLine("\t\"{0}\" -> \"{1}\"", epic.Name, parentEpic.Name);
 						epic.Parent = parentEpic;
 						epic.Save();
+						++count;
+						Console.WriteLine("\t{0} -> {1}", Reference(epic), Reference(parentEpic));
 					}
 				}
 			}
 
 			Console.WriteLine("{0} generated epics parented.", count);
+
+			Console.WriteLine("Assigning root, themed epics to generated epics");
+			count = 0;
+
+			foreach (Epic epic in generator.ChooseEpics())
+			{
+				var theme = epic.Theme;
+				Epic newParentEpic;
+				if (map.TryGetValue(theme, out newParentEpic))
+				{
+					epic.Parent = newParentEpic;
+					epic.Save();
+					++count;
+					Console.WriteLine("\t{0} -> {1}", Reference(epic), Reference(newParentEpic));
+				}
+			}
+
+			Console.WriteLine("{0} root, themed epics assigned.", count);
 		}
 
-		private static void Output(BaseAsset asset)
+		private static string Reference(ProjectAsset asset)
 		{
-			Console.WriteLine("{0} {1}", asset.ID, asset.Name);
+			return string.Format("\"{0}\" ({1}/{2})", asset.Name, asset.DisplayID, asset.ID);
 		}
 	}
 }
