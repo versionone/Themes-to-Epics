@@ -14,7 +14,13 @@ namespace VersionOne.Themes_to_Epics
 					.Load(ConfigurationManager.AppSettings)
 					.Load(args)
 					.Validate();
-				Run(args);
+				Run(options);
+			}
+			catch (Options.InvalidOptionsException e)
+			{
+				Console.WriteLine(e.Message);
+				Console.WriteLine(Options.Usage());
+				return 1;
 			}
 			catch (Exception e)
 			{
@@ -24,13 +30,12 @@ namespace VersionOne.Themes_to_Epics
 			return 0;
 		}
 
-		private static void Run(string[] args)
+		private static void Run(Options options)
 		{
-			V1Instance v1Instance = new V1Instance("http://localhost/U", "admin", "admin");
+			V1Instance v1Instance = new V1Instance(options.Url, options.Username, options.Password);
 			V1Adapter v1Adapter = new V1Adapter(v1Instance);
-			var scopeMoniker = args[0];
 
-			Project project = new ProjectResolver(v1Instance).Resolve(scopeMoniker);
+			Project project = new ProjectResolver(v1Instance).Resolve(options.Scope);
 			Output(project);
 
 			EpicGenerator generator = new EpicGenerator(project, v1Adapter);
