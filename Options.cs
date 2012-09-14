@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace VersionOne.Themes_to_Epics
 {
-	internal class Options
+	public class Options
 	{
 		public Options Load(NameValueCollection settings)
 		{

@@ -5,7 +5,7 @@ using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics
 {
-	class Program
+	public class Program
 	{
 		static int Main(string[] args)
 		{
@@ -15,7 +15,7 @@ namespace VersionOne.Themes_to_Epics
 					.Load(ConfigurationManager.AppSettings)
 					.Load(args)
 					.Validate();
-				Run(options);
+				new Program(options).Run();
 			}
 			catch (Options.InvalidOptionsException e)
 			{
@@ -32,32 +32,34 @@ namespace VersionOne.Themes_to_Epics
 			return 0;
 		}
 
-		private static void Run(Options options)
+		private readonly Options _options;
+		private readonly IDictionary<Theme, Epic> _map = new Dictionary<Theme, Epic>();
+		private EpicGenerator _generator;
+
+		public Program(Options options)
 		{
-			var v1Instance = Connect(options);
-
-			var project = Resolve(options.Scope, v1Instance);
-
-			var generator = new EpicGenerator(project, new V1Adapter(v1Instance));
-
-			IDictionary<Theme, Epic> map = new Dictionary<Theme, Epic>();
-
-			Convert(generator, map);
-
-			Tree(map);
-
-			Reassign(generator, map);
+			_options = options;
 		}
 
-		private static V1Instance Connect(Options options)
+		public void Run()
 		{
-			Console.WriteLine("Connecting to {0} ...", options.Url);
-			V1Instance v1Instance = new V1Instance(options.Url, options.Username, options.Password);
+			var v1Instance = Connect();
+			var project = Resolve(_options.Scope, v1Instance);
+			_generator = new EpicGenerator(project, new V1Adapter(v1Instance));
+			Convert();
+			Tree();
+			Reassign();
+		}
+
+		private V1Instance Connect()
+		{
+			Console.WriteLine("Connecting to {0} ...", _options.Url);
+			V1Instance v1Instance = new V1Instance(_options.Url, _options.Username, _options.Password);
 			Console.WriteLine("Connected.");
 			return v1Instance;
 		}
 
-		private static Project Resolve(string moniker, V1Instance v1Instance)
+		private Project Resolve(string moniker, V1Instance v1Instance)
 		{
 			Console.WriteLine("Resolving {0} ...", moniker);
 			Project project = new ProjectResolver(v1Instance).Resolve(moniker);
@@ -65,35 +67,35 @@ namespace VersionOne.Themes_to_Epics
 			return project;
 		}
 
-		private static void Convert(EpicGenerator generator, IDictionary<Theme, Epic> map)
+		private void Convert()
 		{
 			Console.WriteLine("Processing themes...");
 
-			foreach (var theme in generator.ChooseThemes())
+			foreach (var theme in _generator.ChooseThemes())
 			{
 				Console.Write("\t{0} -> ", Reference(theme));
-				var epic = generator.GenerateEpicFrom(theme);
-				map.Add(theme, epic);
+				Epic epic = _generator.GenerateEpicFrom(theme);
+				_map.Add(theme, epic);
 				Console.WriteLine(Reference(epic));
 			}
 
-			Console.WriteLine("{0} themes processed.", map.Count);
+			Console.WriteLine("{0} themes processed.", _map.Count);
 		}
 
-		private static void Tree(IDictionary<Theme, Epic> map)
+		private void Tree()
 		{
 			Console.WriteLine("Parenting generated epics...");
 			var count = 0;
 
-			foreach (KeyValuePair<Theme, Epic> pair in map)
+			foreach (KeyValuePair<Theme, Epic> pair in _map)
 			{
-				var theme = pair.Key;
-				var epic = pair.Value;
-				var parentTheme = theme.ParentTheme;
+				Theme theme = pair.Key;
+				Epic epic = pair.Value;
+				Theme parentTheme = theme.ParentTheme;
 				if (parentTheme != null)
 				{
 					Epic parentEpic;
-					if (map.TryGetValue(parentTheme, out parentEpic))
+					if (_map.TryGetValue(parentTheme, out parentEpic))
 					{
 						Console.WriteLine("\t{0} -> {1}", Reference(epic), Reference(parentEpic));
 						epic.Parent = parentEpic;
@@ -106,16 +108,16 @@ namespace VersionOne.Themes_to_Epics
 			Console.WriteLine("{0} generated epics parented.", count);
 		}
 
-		private static void Reassign(EpicGenerator generator, IDictionary<Theme, Epic> map)
+		private void Reassign()
 		{
 			Console.WriteLine("Assigning existing epics to generated epics");
 			var count = 0;
 
-			foreach (Epic epic in generator.ChooseEpics())
+			foreach (Epic epic in _generator.ChooseEpics())
 			{
-				var theme = epic.Theme;
+				Theme theme = epic.Theme;
 				Epic newParentEpic;
-				if (map.TryGetValue(theme, out newParentEpic))
+				if (_map.TryGetValue(theme, out newParentEpic))
 				{
 					Console.WriteLine("\t{0} -> {1}", Reference(epic), Reference(newParentEpic));
 					epic.Parent = newParentEpic;
