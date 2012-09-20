@@ -15,7 +15,7 @@ namespace VersionOne.Themes_to_Epics
 					.Load(ConfigurationManager.AppSettings)
 					.Load(args)
 					.Validate();
-				new Program(options).Run();
+				new Conversion(options).Run();
 			}
 			catch (Options.InvalidOptionsException e)
 			{
@@ -32,11 +32,15 @@ namespace VersionOne.Themes_to_Epics
 			return 0;
 		}
 
+	}
+
+	internal class Conversion
+	{
 		private readonly Options _options;
 		private readonly IDictionary<Theme, Epic> _map = new Dictionary<Theme, Epic>();
 		private EpicGenerator _generator;
 
-		public Program(Options options)
+		public Conversion(Options options)
 		{
 			_options = options;
 		}
