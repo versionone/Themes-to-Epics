@@ -6,7 +6,7 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 	public static class Random
 	{
 		private static readonly System.Random _rnd = new System.Random();
-		private const string _characters = "abcdefghijklmnopqrstuvwxyz ABCDDEFHIJKLMNOPQRSTUVWXYZ 0123456789";
+		private const string _characters = "abcdefghijklmnopqrstuvwxyz_ABCDDEFHIJKLMNOPQRSTUVWXYZ_0123456789";
 
 		public static char Character()
 		{
