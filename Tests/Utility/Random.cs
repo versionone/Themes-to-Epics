@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using VersionOne.SDK.ObjectModel;
 
@@ -44,7 +45,22 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 
 		public static double Estimate()
 		{
-			return _rnd.NextDouble() * 100.0;
+			return Number(100.0);
+		}
+
+		private static double Number(double max)
+		{
+			return _rnd.NextDouble() * max;
+		}
+
+		public static bool Boolean()
+		{
+			return _rnd.Next(2) > 1;
+		}
+
+		public static DateTime Date()
+		{
+			return DateTime.Now.AddDays(Number(300));
 		}
 	}
 }

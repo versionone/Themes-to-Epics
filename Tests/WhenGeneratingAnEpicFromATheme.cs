@@ -33,6 +33,14 @@ namespace VersionOne.Themes_to_Epics.Tests
 				_theme.CustomDropdown[customField.FromTheme].PickAValue();
 			foreach (var customField in CustomTextFields)
 				_theme.CustomField[customField.FromTheme] = Random.Name();
+			foreach (var customField in CustomCheckboxFields)
+				_theme.CustomField[customField.FromTheme] = Random.Boolean();
+			foreach (var customField in CustomNumberFields)
+				_theme.CustomField[customField.FromTheme] = Random.Estimate();
+			foreach (var customField in CustomDateFields)
+				_theme.CustomField[customField.FromTheme] = Random.Date();
+			foreach (var customField in CustomRichTextFields)
+				_theme.CustomField[customField.FromTheme] = Random.Description();
 			_theme.Save();
 		}
 
@@ -120,6 +128,58 @@ namespace VersionOne.Themes_to_Epics.Tests
 			if (!CustomTextFields.Any())
 				Assert.Ignore("No custom text fields defined");
 			foreach (var customField in CustomTextFields)
+			{
+				var epicCustomValue = _epic.CustomField[customField.ToEpic];
+				var themeCustomValue = _theme.CustomField[customField.FromTheme];
+				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
+			}
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameCustomCheckboxValues()
+		{
+			if (!CustomCheckboxFields.Any())
+				Assert.Ignore("No custom checkbox fields defined");
+			foreach (var customField in CustomCheckboxFields)
+			{
+				var epicCustomValue = _epic.CustomField[customField.ToEpic];
+				var themeCustomValue = _theme.CustomField[customField.FromTheme];
+				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
+			}
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameCustomNumberValues()
+		{
+			if (!CustomNumberFields.Any())
+				Assert.Ignore("No custom number fields defined");
+			foreach (var customField in CustomNumberFields)
+			{
+				var epicCustomValue = _epic.CustomField[customField.ToEpic];
+				var themeCustomValue = _theme.CustomField[customField.FromTheme];
+				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
+			}
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameCustomDateValues()
+		{
+			if (!CustomDateFields.Any())
+				Assert.Ignore("No custom date fields defined");
+			foreach (var customField in CustomDateFields)
+			{
+				var epicCustomValue = _epic.CustomField[customField.ToEpic];
+				var themeCustomValue = _theme.CustomField[customField.FromTheme];
+				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
+			}
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameCustomRichTextValues()
+		{
+			if (!CustomRichTextFields.Any())
+				Assert.Ignore("No custom rich-text fields defined");
+			foreach (var customField in CustomRichTextFields)
 			{
 				var epicCustomValue = _epic.CustomField[customField.ToEpic];
 				var themeCustomValue = _theme.CustomField[customField.FromTheme];

@@ -104,6 +104,26 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			get { return CustomFields.Where(c => c.Type == CustomFieldType.Text); }
 		}
 
+		protected static IEnumerable<ICopyCustomField> CustomCheckboxFields
+		{
+			get { return CustomFields.Where(c => c.Type == CustomFieldType.Checkbox); }
+		}
+
+		protected static IEnumerable<ICopyCustomField> CustomNumberFields
+		{
+			get { return CustomFields.Where(c => c.Type == CustomFieldType.Number); }
+		}
+
+		protected static IEnumerable<ICopyCustomField> CustomDateFields
+		{
+			get { return CustomFields.Where(c => c.Type == CustomFieldType.Date); }
+		}
+
+		protected static IEnumerable<ICopyCustomField> CustomRichTextFields
+		{
+			get { return CustomFields.Where(c => c.Type == CustomFieldType.RichText); }
+		}
+
 		Epic IV1Adapter.CreateEpic(string name, Project project)
 		{
 			return Push(V1.Create.Epic(name, project));

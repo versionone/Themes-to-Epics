@@ -4,6 +4,10 @@ namespace VersionOne.Themes_to_Epics
 	{
 		DropDown,
 		Text,
+		Checkbox,
+		Number,
+		Date,
+		RichText,
 	}
 
 	public interface ICopyCustomField
