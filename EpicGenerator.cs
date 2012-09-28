@@ -9,10 +9,12 @@ namespace VersionOne.Themes_to_Epics
 	{
 		private readonly IV1Adapter _v1;
 		private readonly Project _scope;
+		private readonly IEnumerable<ICopyCustomField> _customFields;
 
-		public EpicGenerator(Project scope, IV1Adapter v1)
+		public EpicGenerator(Project scope, IEnumerable<ICopyCustomField> customFields, IV1Adapter v1)
 		{
 			_v1 = v1;
+			_customFields = customFields;
 			_scope = scope;
 		}
 
@@ -43,7 +45,7 @@ namespace VersionOne.Themes_to_Epics
 			epic.Goals.Clear();
 			foreach (var goal in theme.Goals)
 				epic.Goals.Add(goal);
-			foreach (var customField in Configuration.Default.CustomFields)
+			foreach (var customField in _customFields)
 			{
 				epic.CustomDropdown[customField.ToEpic].CurrentValue = theme.CustomDropdown[customField.FromTheme].CurrentValue;
 			}

@@ -10,6 +10,7 @@ namespace VersionOne.Themes_to_Epics
 			try
 			{
 				Options options = new Options()
+					.Load(Configuration.Default)
 					.Load(ConfigurationManager.AppSettings)
 					.Load(args)
 					.Validate();

@@ -19,7 +19,7 @@ namespace VersionOne.Themes_to_Epics
 		{
 			var v1Instance = Connect();
 			var project = Resolve(_options.Scope, v1Instance);
-			_generator = new EpicGenerator(project, new V1Adapter(v1Instance));
+			_generator = new EpicGenerator(project, _options.CustomFields, new V1Adapter(v1Instance));
 			Convert();
 			Tree();
 			Reassign();

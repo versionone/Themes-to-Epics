@@ -30,9 +30,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Goals.Add(NewGoal());
 			_theme.Goals.Add(NewGoal());
 			foreach (var customField in CustomDropDownFields)
-			{
 				_theme.CustomDropdown[customField.FromTheme].PickAValue();
-			}
 			_theme.Save();
 		}
 

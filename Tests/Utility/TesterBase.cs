@@ -86,7 +86,7 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 
 		internal EpicGenerator ClassUnderTest
 		{
-			get { return new EpicGenerator(TheProject, this); }
+			get { return new EpicGenerator(TheProject, CustomFields, this); }
 		}
 
 		private static IEnumerable<ICopyCustomField> CustomFields
