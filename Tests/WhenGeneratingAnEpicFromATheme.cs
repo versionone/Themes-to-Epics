@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using VersionOne.SDK.ObjectModel;
 using VersionOne.Themes_to_Epics.Tests.Utility;
@@ -28,6 +29,10 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Estimate = Random.Estimate();
 			_theme.Goals.Add(NewGoal());
 			_theme.Goals.Add(NewGoal());
+			foreach (var customField in CustomDropDownFields)
+			{
+				_theme.CustomDropdown[customField.FromTheme].PickAValue();
+			}
 			_theme.Save();
 		}
 
@@ -94,6 +99,19 @@ namespace VersionOne.Themes_to_Epics.Tests
 		public void TheEpicShouldHaveNoTheme()
 		{
 			Assert.That(_epic.Theme, Is.Null);
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameCustomDropdownValues()
+		{
+			if (!CustomDropDownFields.Any())
+				Assert.Ignore("No custom dropdown fields defined");
+			foreach (var customField in CustomDropDownFields)
+			{
+				var epicCustomValue = _epic.CustomDropdown[customField.ToEpic].CurrentValue;
+				var themeCustomValue = _theme.CustomDropdown[customField.FromTheme].CurrentValue;
+				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
+			}
 		}
 	}
 }

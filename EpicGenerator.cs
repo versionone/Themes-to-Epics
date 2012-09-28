@@ -43,6 +43,10 @@ namespace VersionOne.Themes_to_Epics
 			epic.Goals.Clear();
 			foreach (var goal in theme.Goals)
 				epic.Goals.Add(goal);
+			foreach (var customField in Configuration.Default.CustomFields)
+			{
+				epic.CustomDropdown[customField.ToEpic].CurrentValue = theme.CustomDropdown[customField.FromTheme].CurrentValue;
+			}
 			epic.Reference = ReferenceToTheme(theme);
 			epic.Save();
 			return epic;

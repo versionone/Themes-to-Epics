@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using VersionOne.SDK.ObjectModel;
 
 namespace VersionOne.Themes_to_Epics.Tests.Utility
@@ -86,6 +87,16 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 		internal EpicGenerator ClassUnderTest
 		{
 			get { return new EpicGenerator(TheProject, this); }
+		}
+
+		private static Configuration.CustomFieldsConfiguration CustomFields
+		{
+			get { return Configuration.Default.CustomFields; }
+		}
+
+		protected static IEnumerable<Configuration.CustomField> CustomDropDownFields
+		{
+			get { return CustomFields.Where(c => c.Type == Configuration.CustomFieldType.DropDown); }
 		}
 
 		Epic IV1Adapter.CreateEpic(string name, Project project)
