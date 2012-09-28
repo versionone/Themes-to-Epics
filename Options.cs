@@ -1,10 +1,20 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace VersionOne.Themes_to_Epics
 {
 	public class Options
 	{
+		public Options Load(Configuration configuration)
+		{
+			if (configuration != null)
+			{
+				CustomFields = configuration.CustomFields;
+			}
+			return this;
+		}
+
 		public Options Load(NameValueCollection settings)
 		{
 			if (settings["Url"] != null)
@@ -43,9 +53,19 @@ namespace VersionOne.Themes_to_Epics
 		}
 
 		public string Scope { get; set; }
+
 		public string Url { get; set; }
+
 		public string Username { get; set; }
+
 		public string Password { get; set; }
+
+		private IEnumerable<ICopyCustomField> _customFields = new ICopyCustomField[0];
+		public IEnumerable<ICopyCustomField> CustomFields
+		{
+			get { return _customFields; }
+			set { _customFields = value ?? new ICopyCustomField[0]; }
+		}
 
 		public class InvalidOptionsException : Exception
 		{

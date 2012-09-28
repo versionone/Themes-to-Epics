@@ -69,6 +69,7 @@
     <Compile Include="Conversion.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="EpicGenerator.cs" />
+    <Compile Include="ICopyCustomField.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="AssemblyInfo.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Tests\WhenGeneratingAnEpicFromAThemeAgain.cs" />
     <Compile Include="Tests\WhenLoadingInvalidOptionsFromAppSettings.cs" />
     <Compile Include="Tests\WhenLoadingOptionsFromCommandLine.cs" />
+    <Compile Include="Tests\WhenLoadingOptionsFromConfiguration.cs" />
     <Compile Include="Tests\WhenLoadingValidOptionsFromAppSettings.cs" />
     <Compile Include="Tests\WhenResolvingAProjectMoniker.cs" />
     <Compile Include="Tests\WhenValidatingOptions.cs" />

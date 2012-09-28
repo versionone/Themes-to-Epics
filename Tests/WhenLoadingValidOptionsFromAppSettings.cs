@@ -7,7 +7,7 @@ namespace VersionOne.Themes_to_Epics.Tests
 	public class WhenLoadingValidOptionsFromAppSettings
 	{
 		private NameValueCollection _settings;
-		private static Options _options;
+		private Options _options;
 
 		[TestFixtureSetUp]
 		public void SetUp()

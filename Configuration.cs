@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 
 namespace VersionOne.Themes_to_Epics
 {
@@ -24,9 +23,9 @@ namespace VersionOne.Themes_to_Epics
 		[ConfigurationCollection(typeof(CustomField), AddItemName = "copy", CollectionType = ConfigurationElementCollectionType.BasicMap)]
 		public class CustomFieldsConfiguration : ConfigurationElementCollection, IEnumerable<CustomField>
 		{
-			public new CustomField this[string from]
+			public void Add(CustomField customField)
 			{
-				get { return BaseGet(from) as CustomField; }
+				BaseAdd(customField);
 			}
 
 			protected override ConfigurationElement CreateNewElement()
@@ -48,12 +47,7 @@ namespace VersionOne.Themes_to_Epics
 			}
 		}
 
-		public enum CustomFieldType
-		{
-			DropDown,
-		}
-
-		public class CustomField : ConfigurationElement
+		public class CustomField : ConfigurationElement, ICopyCustomField
 		{
 			[ConfigurationProperty("type", IsKey = true, IsRequired = true)]
 			public CustomFieldType Type

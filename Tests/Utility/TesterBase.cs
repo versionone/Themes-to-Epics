@@ -89,14 +89,14 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			get { return new EpicGenerator(TheProject, this); }
 		}
 
-		private static Configuration.CustomFieldsConfiguration CustomFields
+		private static IEnumerable<ICopyCustomField> CustomFields
 		{
 			get { return Configuration.Default.CustomFields; }
 		}
 
-		protected static IEnumerable<Configuration.CustomField> CustomDropDownFields
+		protected static IEnumerable<ICopyCustomField> CustomDropDownFields
 		{
-			get { return CustomFields.Where(c => c.Type == Configuration.CustomFieldType.DropDown); }
+			get { return CustomFields.Where(c => c.Type == CustomFieldType.DropDown); }
 		}
 
 		Epic IV1Adapter.CreateEpic(string name, Project project)
