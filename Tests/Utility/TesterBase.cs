@@ -99,6 +99,11 @@ namespace VersionOne.Themes_to_Epics.Tests.Utility
 			get { return CustomFields.Where(c => c.Type == CustomFieldType.DropDown); }
 		}
 
+		protected static IEnumerable<ICopyCustomField> CustomTextFields
+		{
+			get { return CustomFields.Where(c => c.Type == CustomFieldType.Text); }
+		}
+
 		Epic IV1Adapter.CreateEpic(string name, Project project)
 		{
 			return Push(V1.Create.Epic(name, project));

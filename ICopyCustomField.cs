@@ -3,6 +3,7 @@ namespace VersionOne.Themes_to_Epics
 	public enum CustomFieldType
 	{
 		DropDown,
+		Text,
 	}
 
 	public interface ICopyCustomField

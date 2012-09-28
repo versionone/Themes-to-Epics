@@ -31,6 +31,8 @@ namespace VersionOne.Themes_to_Epics.Tests
 			_theme.Goals.Add(NewGoal());
 			foreach (var customField in CustomDropDownFields)
 				_theme.CustomDropdown[customField.FromTheme].PickAValue();
+			foreach (var customField in CustomTextFields)
+				_theme.CustomField[customField.FromTheme] = Random.Name();
 			_theme.Save();
 		}
 
@@ -108,6 +110,19 @@ namespace VersionOne.Themes_to_Epics.Tests
 			{
 				var epicCustomValue = _epic.CustomDropdown[customField.ToEpic].CurrentValue;
 				var themeCustomValue = _theme.CustomDropdown[customField.FromTheme].CurrentValue;
+				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
+			}
+		}
+
+		[Test]
+		public void TheEpicShouldHaveTheSameCustomTextValues()
+		{
+			if (!CustomTextFields.Any())
+				Assert.Ignore("No custom text fields defined");
+			foreach (var customField in CustomTextFields)
+			{
+				var epicCustomValue = _epic.CustomField[customField.ToEpic];
+				var themeCustomValue = _theme.CustomField[customField.FromTheme];
 				Assert.That(epicCustomValue, Is.EqualTo(themeCustomValue));
 			}
 		}

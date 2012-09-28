@@ -47,7 +47,10 @@ namespace VersionOne.Themes_to_Epics
 				epic.Goals.Add(goal);
 			foreach (var customField in _customFields)
 			{
-				epic.CustomDropdown[customField.ToEpic].CurrentValue = theme.CustomDropdown[customField.FromTheme].CurrentValue;
+				if (customField.Type == CustomFieldType.DropDown)
+					epic.CustomDropdown[customField.ToEpic].CurrentValue = theme.CustomDropdown[customField.FromTheme].CurrentValue;
+				else
+					epic.CustomField[customField.ToEpic] = theme.CustomField[customField.FromTheme];
 			}
 			epic.Reference = ReferenceToTheme(theme);
 			epic.Save();
