@@ -55,6 +55,7 @@ end else begin
 	print 'Project: ' + @projectName
 end
 
+declare @assetStringUpdates table(AssetID int, StringDefinition varchar(200) collate Latin1_General_BIN, OldString int, NewString int, LongStringDefinition varchar(200) collate Latin1_General_BIN, OldLongString int, NewLongString int)
 
 declare @auditid int, @changereasonid int, @changecommentid int
 exec dbo._SaveString N'Script', @changereasonid output
@@ -108,6 +109,7 @@ if @error<>0 goto ERR
 --Description
 update dbo.BaseAsset_Now
 set AuditBegin=@auditid, Name=Theme.Name, Description=Theme.Description, Substate=Theme.AssetState, SecurityScopeID=Theme.SecurityScopeID
+output inserted.ID ID, 'BaseAsset.Name', deleted.Name, inserted.Name, 'BaseAsset.Description', deleted.Description, inserted.Description into @assetStringUpdates
 from dbo.BaseAsset_Now
 join dbo.IDSource Epic on Epic.ID=BaseAsset_Now.ID and IsNew=0
 join dbo.BaseAsset_Now Theme on Theme.ID=Epic.ThemeID
@@ -117,6 +119,7 @@ if @error<>0 goto ERR
 print @rowcount + ' updated Epics (BaseAsset)'
 
 insert dbo.BaseAsset_Now(ID, AssetType, AuditBegin, Name, Description, AssetState, Substate, SecurityScopeID)
+output inserted.ID ID, 'BaseAsset.Name', null, inserted.Name, 'BaseAsset.Description', null, inserted.Description into @assetStringUpdates
 select Epic.ID, 'Story', @auditid, Theme.Name, Theme.Description, 208, Theme.AssetState, Theme.SecurityScopeID
 from dbo.BaseAsset_Now Theme
 join dbo.IDSource Epic on Epic.ThemeID=Theme.ID
@@ -244,6 +247,8 @@ while 1=1 begin
 
 	insert dbo.CustomText(ID, Definition, AuditBegin, Value)
 	values (@epicID, 'Workitem.Reference', @auditid, @stringID)
+
+	insert @assetStringUpdates values (@epicID, 'Workitem.Reference', null, @stringID, null, null, null)
 end
 close C; deallocate C
 
@@ -283,6 +288,7 @@ if @error<>0 goto ERR
 print @rowcount + ' Custom Date values'
 
 update dbo.CustomLongText set AuditEnd=@auditid
+output deleted.ID, null, null, null, deleted.Definition, deleted.Value, null into @assetStringUpdates
 from dbo.IDSource Epic
 where CustomLongText.ID=Epic.ID and IsNew is not null and AuditEnd is null
 
@@ -290,6 +296,7 @@ select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
 
 insert dbo.CustomLongText(ID, Definition, AuditBegin, Value)
+output inserted.ID, null, null, null, inserted.Definition, null, inserted.Value into @assetStringUpdates
 select Epic.ID, ToEpicCustomField, @auditid, ThemeCustom.Value
 from dbo.IDSource Epic
 join dbo.CustomLongText ThemeCustom on ThemeCustom.ID=Epic.ThemeID and ThemeCustom.AuditEnd is null
@@ -317,6 +324,7 @@ if @error<>0 goto ERR
 print @rowcount + ' Custom Numeric values'
 
 update dbo.CustomText set AuditEnd=@auditid
+output deleted.ID, deleted.Definition, deleted.Value, null, null, null, null into @assetStringUpdates
 from dbo.IDSource Epic
 where CustomText.ID=Epic.ID and IsNew is not null and AuditEnd is null
 
@@ -324,6 +332,7 @@ select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
 
 insert dbo.CustomText(ID, Definition, AuditBegin, Value)
+output inserted.ID, inserted.Definition, null, inserted.Value, null, null, null into @assetStringUpdates
 select Epic.ID, ToEpicCustomField, @auditid, ThemeCustom.Value
 from dbo.IDSource Epic
 join dbo.CustomText ThemeCustom on ThemeCustom.ID=Epic.ThemeID and ThemeCustom.AuditEnd is null
@@ -382,6 +391,39 @@ where Workitem_Now.AssetType='Story' and Workitem_Now.SuperID is null
 select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
 print @rowcount + ' stories and epics assigned'
+
+
+-- track strings
+delete dbo.AssetString
+from @assetStringUpdates
+where ID=AssetID and Definition=StringDefinition and StringID=OldString
+
+select @rowcount=@@ROWCOUNT, @error=@@ERROR
+if @error<>0 goto ERR
+
+insert dbo.AssetString(ID, Definition, StringID)
+select AssetID, StringDefinition, NewString
+from @assetStringUpdates
+where NewString is not null
+
+select @rowcount=@@ROWCOUNT, @error=@@ERROR
+if @error<>0 goto ERR
+
+delete dbo.AssetLongString
+from @assetStringUpdates
+where ID=AssetID and Definition=LongStringDefinition and StringID=OldLongString
+
+select @rowcount=@@ROWCOUNT, @error=@@ERROR
+if @error<>0 goto ERR
+
+insert dbo.AssetLongString(ID, Definition, StringID)
+select AssetID, LongStringDefinition, NewLongString
+from @assetStringUpdates
+where NewLongString is not null
+
+select @rowcount=@@ROWCOUNT, @error=@@ERROR
+if @error<>0 goto ERR
+
 
 if (@saveChanges = 1) goto OK
 raiserror('Rolling back changes.  To commit changes, set @saveChanges=1',16,1)
