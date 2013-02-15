@@ -350,6 +350,14 @@ select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
 print @rowcount + ' Custom Relation values'
 
+insert dbo.CustomRelation(Definition, PrimaryID, ForeignID, AuditBegin)
+select 'Story.GeneratedFromTheme', Epic.ID, Epic.ThemeID, @auditid
+from dbo.IDSource Epic
+where IsNew=1
+
+select @rowcount=@@ROWCOUNT, @error=@@ERROR
+if @error<>0 goto ERR
+
 
 -- Tree generated epics
 update dbo.Workitem_Now set AuditBegin=@auditid, SuperID=Super.ID
