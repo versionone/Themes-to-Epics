@@ -68,7 +68,7 @@ if @error<>0 goto ERR
 update dbo.IDSource 
 set ThemeID=Theme_Now.ID, IsNew=0
 from dbo.BaseAsset_Now 
-join dbo.Workitem_Now on Workitem_Now.ID=BaseAsset_Now.ID and AssetState<128
+join dbo.Workitem_Now on Workitem_Now.ID=BaseAsset_Now.ID and AssetState<192
 join dbo.Theme_Now on Theme_Now.ID=Workitem_Now.ID
 join dbo.ScopeParentHierarchy on AncestorID=@projectID and DescendantID=Workitem_Now.ScopeID and ScopeParentHierarchy.AuditEnd is null
 join dbo.CustomRelation on ForeignID=Theme_Now.ID and Definition='Story.GeneratedFromTheme' and CustomRelation.AuditEnd is null
@@ -82,7 +82,7 @@ print 'Refreshing ' + @rowcount + ' Themes'
 insert dbo.IDSource(ThemeID, IsNew)
 select Theme_Now.ID, 1
 from dbo.BaseAsset_Now 
-join dbo.Workitem_Now on Workitem_Now.ID=BaseAsset_Now.ID and AssetState<128
+join dbo.Workitem_Now on Workitem_Now.ID=BaseAsset_Now.ID and AssetState<192
 join dbo.Theme_Now on Theme_Now.ID=Workitem_Now.ID
 join dbo.ScopeParentHierarchy on AncestorID=@projectID and DescendantID=Workitem_Now.ScopeID and ScopeParentHierarchy.AuditEnd is null
 where not exists (select PrimaryID from CustomRelation where ForeignID=Theme_Now.ID and Definition='Story.GeneratedFromTheme' and AuditEnd is null)
