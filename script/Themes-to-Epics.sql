@@ -383,7 +383,7 @@ print @rowcount + ' epics parented'
 -- Assign top-level themed epics and stories to generated Epics
 update dbo.Workitem_Now set AuditBegin=@auditid, SuperID=Super.ID
 from dbo.Workitem_Now
-join dbo.BaseAsset_Now on BaseAsset_Now.ID=Workitem_Now.ID and AssetState<192
+join dbo.BaseAsset_Now on BaseAsset_Now.ID=Workitem_Now.ID and (AssetState<192 or (AssetState=208 and SubState<192))
 join dbo.ScopeParentHierarchy on AncestorID=@projectID and DescendantID=Workitem_Now.ScopeID and ScopeParentHierarchy.AuditEnd is null
 join dbo.IDSource Super on Super.ThemeID=Workitem_Now.ParentID
 where Workitem_Now.AssetType='Story' and Workitem_Now.SuperID is null
