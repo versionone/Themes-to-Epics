@@ -19,7 +19,6 @@ GO
 declare @projectID int; select @projectID = 0
 
 declare @customFields table(FromThemeCustomField varchar(200) collate Latin1_General_BIN, ToEpicCustomField varchar(200) collate Latin1_General_BIN)
-insert @customFields values('Theme.Custom_Is_MMF2', 'PrimaryWorkitem.Custom_Is_MMF')
 insert @customFields values('Theme.Custom_IsMMF2', 'PrimaryWorkitem.Custom_IsMMF')
 
 declare @saveChanges bit; --set @saveChanges = 1
