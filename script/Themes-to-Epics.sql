@@ -11,8 +11,7 @@
  *		To commit changes, set @saveChanges = 1.
  */
 
-alter table dbo.IDSource add ThemeID int null
-alter table dbo.IDSource add IsNew bit null
+alter table dbo.IDSource add ThemeID int null, IsNew bit null, Name int null
 
 GO
 
@@ -65,7 +64,7 @@ if @error<>0 goto ERR
 
 -- find Themes that already were converted
 update dbo.IDSource 
-set ThemeID=Theme_Now.ID, IsNew=0
+set ThemeID=Theme_Now.ID, IsNew=0, Name=BaseAsset_Now.Name
 from dbo.BaseAsset_Now 
 join dbo.Workitem_Now on Workitem_Now.ID=BaseAsset_Now.ID and AssetState<192
 join dbo.Theme_Now on Theme_Now.ID=Workitem_Now.ID
@@ -78,8 +77,8 @@ if @error<>0 goto ERR
 print 'Refreshing ' + @rowcount + ' Themes'
 
 -- find Themes that have not been converted
-insert dbo.IDSource(ThemeID, IsNew)
-select Theme_Now.ID, 1
+insert dbo.IDSource(ThemeID, IsNew, Name)
+select Theme_Now.ID, 1, BaseAsset_Now.Name
 from dbo.BaseAsset_Now 
 join dbo.Workitem_Now on Workitem_Now.ID=BaseAsset_Now.ID and AssetState<192
 join dbo.Theme_Now on Theme_Now.ID=Workitem_Now.ID
@@ -89,6 +88,28 @@ where not exists (select PrimaryID from CustomRelation where ForeignID=Theme_Now
 select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
 print 'Converting ' + @rowcount + ' Themes'
+
+
+-- calculate new names for new epics
+declare @epicID int, @themeID int, @nameID int, @name nvarchar(4000)
+declare C cursor local fast_forward for
+	select IDSource.ID, IDSource.Name, Name.Value 
+	from dbo.IDSource 
+	join dbo.String Name on Name.ID=Name
+open C
+while 1=1 begin
+	fetch next from C into @epicID, @nameID, @name
+	if @@FETCH_STATUS<>0 break
+
+	declare @newName nvarchar(4000), @newNameID int
+	select @newName=N'Feature - ' + @name
+	exec dbo._SaveString @newName, @newNameID output
+
+	update dbo.IDSource
+	set Name=@newNameID
+	where ID=@epicID and Name=@nameID
+end
+close C; deallocate C
 
 
 -- reserve numbers for the new epics
@@ -107,7 +128,7 @@ if @error<>0 goto ERR
 --Name
 --Description
 update dbo.BaseAsset_Now
-set AuditBegin=@auditid, Name=Theme.Name, Description=Theme.Description, Substate=Theme.AssetState, SecurityScopeID=Theme.SecurityScopeID
+set AuditBegin=@auditid, Name=Epic.Name, Description=Theme.Description, Substate=Theme.AssetState, SecurityScopeID=Theme.SecurityScopeID
 output inserted.ID ID, 'BaseAsset.Name', deleted.Name, inserted.Name, 'BaseAsset.Description', deleted.Description, inserted.Description into @assetStringUpdates
 from dbo.BaseAsset_Now
 join dbo.IDSource Epic on Epic.ID=BaseAsset_Now.ID and IsNew=0
@@ -119,7 +140,7 @@ print @rowcount + ' updated Epics (BaseAsset)'
 
 insert dbo.BaseAsset_Now(ID, AssetType, AuditBegin, Name, Description, AssetState, Substate, SecurityScopeID)
 output inserted.ID ID, 'BaseAsset.Name', null, inserted.Name, 'BaseAsset.Description', null, inserted.Description into @assetStringUpdates
-select Epic.ID, 'Story', @auditid, Theme.Name, Theme.Description, 208, Theme.AssetState, Theme.SecurityScopeID
+select Epic.ID, 'Story', @auditid, Epic.Name, Theme.Description, 208, Theme.AssetState, Theme.SecurityScopeID
 from dbo.BaseAsset_Now Theme
 join dbo.IDSource Epic on Epic.ThemeID=Theme.ID
 where IsNew=1
@@ -232,7 +253,6 @@ if @error<>0 goto ERR
 print @rowcount + ' Goals'
 
 --Reference
-declare @epicID int, @themeID int
 declare C cursor local fast_forward for
 	select ID, ThemeID from dbo.IDSource where IsNew=1
 open C
@@ -432,5 +452,4 @@ DONE:
 
 GO
 
-alter table dbo.IDSource drop column IsNew
-alter table dbo.IDSource drop column ThemeID
+alter table dbo.IDSource drop column IsNew, ThemeID, Name
