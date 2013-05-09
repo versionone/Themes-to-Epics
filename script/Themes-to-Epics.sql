@@ -405,7 +405,8 @@ from dbo.Workitem_Now
 join dbo.BaseAsset_Now on BaseAsset_Now.ID=Workitem_Now.ID and (AssetState<192 or (AssetState=208 and SubState<192))
 join dbo.ScopeParentHierarchy on AncestorID=@projectID and DescendantID=Workitem_Now.ScopeID and ScopeParentHierarchy.AuditEnd is null
 join dbo.IDSource Super on Super.ThemeID=Workitem_Now.ParentID
-where Workitem_Now.AssetType='Story' and Workitem_Now.SuperID is null
+where Workitem_Now.AssetType='Story' and Workitem_Now.SuperID is null 
+	and Workitem_Now.ID not in (select ID from dbo.IDSource where ThemeID is not null)
 
 select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
