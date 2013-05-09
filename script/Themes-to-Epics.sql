@@ -444,6 +444,19 @@ select @rowcount=@@ROWCOUNT, @error=@@ERROR
 if @error<>0 goto ERR
 
 
+-- assign ranks to generated Epics that are missing them
+insert dbo.[Rank](Definition, ID, [Order])
+select 'PrimaryWorkitem.Order', PrimaryID, RR.[Order]
+from dbo.CustomRelation C 
+left join dbo.[Rank] R on R.ID=C.PrimaryID
+left join dbo.[Rank] RR on RR.ID=C.ForeignID
+where C.Definition='Story.GeneratedFromTheme' and R.[Order] is null
+
+select @rowcount=@@ROWCOUNT, @error=@@ERROR
+if @error<>0 goto ERR
+print @rowcount + ' epics ranked'
+
+
 if (@saveChanges = 1) goto OK
 raiserror('Rolling back changes.  To commit changes, set @saveChanges=1',16,1)
 ERR: rollback tran TX
